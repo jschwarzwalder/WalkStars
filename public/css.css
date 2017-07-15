@@ -13,4 +13,9 @@ h1.title {
 }
 .col-xs-12, .panel, .container{
   height: 100%;
+}     
+
+div {
+  width: 100vh;
+  max-width: 1200px;
 }
