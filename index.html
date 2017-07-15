@@ -21,7 +21,7 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    
+
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -31,14 +31,17 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
+    <style>
+        
+    </style>
 </head>
   <body>
-    <div class="container-fluid">
+    <div id="demo"></div>
+     <div class="container">
         <div class="header clearfix">
             <div class="page-header">
                 <h1 class="text-center"><span class="glyphicon glyphicon-star" aria-hidden=true></span> Walk Stars <span class="glyphicon glyphicon-star" aria-hidden=true></span> </h1>
-                 
+                <button onclick="getLocation()">Start</button> 
             </div>
             <div class="row">
                 <div class="col-xs-6 text-center">
@@ -48,24 +51,15 @@
                 <h3>Player 2</h3>
                 </div>
             </div>
+        </div>
+        <div class="panel panel-default">
             <div class="row">
-                <div class="col-xs-12 text-center">
-                    <button onclick="getLocation()"  class="btn btn-default">Start</button> 
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 text-center">
-                    <div class="panel panel-default">
-                        
-                        <!-- 4:3 aspect ratio -->
-                            <div id="map" style="width: 100vh; max-width: 600px; height: 100vh; max-height: 400px; background: grey"></div>
-                    </div>
+                <div class="col-xs-12">           
+                    <div id="map" style="width: 100vh; max-width: 1200px; height: 100vh; min-height: 200px; max-height: 1080px; background: grey"></div>
+                    <script type="text/javascript" src='public/app.js'></script>
                 </div>
             </div>
         </div>
     </div>
-
-    
-
   </body>
 </html>   
