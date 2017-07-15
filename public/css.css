@@ -1,0 +1,7 @@
+html {
+  min-width: 0%;
+}
+h1.title {
+  position: absolute;
+  margin-left: 500px;
+}

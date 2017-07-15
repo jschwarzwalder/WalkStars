@@ -1,3 +1,15 @@
+var x = document.getElementById("demo");
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(moveMapToCurrentGps);
+    } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+
+
 var platform = new H.service.Platform({
   'app_id': 'ppxc8S78pismSdspOtop',
   'app_code': 'BVl1WK4jZ5PRbFRJuWvz8g'
@@ -12,7 +24,7 @@ var map = new H.Map(
   defaultLayers.normal.map,
   {
     zoom: 10,
-    center: { lat: 52.5, lng: 13.4 }
+    center: { lat: 2.5, lng: 13.4 }
   });
 
 /**
@@ -20,7 +32,8 @@ var map = new H.Map(
  *
  * @param  {H.Map} map      A HERE Map instance within the application
  */
-function moveMapToCurrentGps(map){
-  map.setCenter({lat:52.5159, lng:13.3777});
+function showPosition(position) {
+  var latlon = "lat:" + position.coords.latitude + "," + "lng:" + position.coords.longitude;
+  map.setCenter({latlon});
   map.setZoom(14);
 }
