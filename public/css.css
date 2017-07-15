@@ -5,3 +5,14 @@ h1.title {
   position: absolute;
   margin-left: 500px;
 }
+#map {
+  position: absolute;
+  top: 10;
+  left: 10;
+  width: 100% !important;
+  height: 100% !important;
+  background-color: blue;
+}
+.col-xs-12, .panel, .container{
+  height: 100%;
+}
