@@ -99,12 +99,14 @@ function updateMap(data) {
 
   var animate = true
   var oldCenter = map.getCenter();
-  if (oldCenter.lat == userGPS.lat && oldCenter.lng == userGPS.lat) {
-      animate = false;
+  if(userGPS && oldCenter){
+    if (oldCenter.lat == userGPS.lat && oldCenter.lng == userGPS.lat) {
+        animate = false;
+    }
+    console.log(userGPS);
+    map.setCenter({lat: userGPS.lat[0], lng: userGPS.lat[1]});
+    map.setZoom(16);
   }
-  console.log(userGPS)
-  map.setCenter({lat: userGPS.lat[0], lng: userGPS.lat[1]});
-  map.setZoom(16);
 }
 
 var platform = new H.service.Platform({
