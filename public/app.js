@@ -12,16 +12,11 @@ function GPS(arr){
 
 setInterval(sendCurrentPosition, 1000);
 
-socket.on('new GPS coords', function(e){
-  console.log(e);
-});
-
 function sendCurrentPosition () {
   var coords = getLocation();
   coords = [47.608013, -122.335167];
   var userGPS = new GPS(coords);
-  console.log(userGPS)
-  socket.emit('new GPS coords', {'gps': userGPS});
+  socket.emit('new GPS coord', {'name': 'Beeker', 'gps': userGPS});
 }
 
 function getLocation() {
@@ -35,10 +30,24 @@ function getLocation() {
   );
 }
 
-socket.on('update map', updateMap);
+socket.on('update map', function (data) {
+  console.log(data);
+});
 
 function updateMap(data) {
-  console.log(data);
+  // console.log(data);
+  var winner = data.winner;
+
+  if (winner === ''){
+    for (var name in data.players) {
+      if (object.hasOwnProperty(name)) {
+        data.players[name].currentGPS
+      }
+    }
+
+  } else {
+    alert(winner + ' won the game!');
+  }
 
 }
 

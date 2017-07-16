@@ -59,8 +59,8 @@ function Player(name){
 }
 
 Game.prototype.addGPS = function (name, gps) {
-  this.name.currentGPS = gps;
-  this.GPSlist[name].push(gps);
+  this.players[name].currentGPS = gps;
+  this.playerPaths[name].push(gps);
 };
 
 var game = new Game();
@@ -71,24 +71,35 @@ app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, './', 'index.html'));
 });
 
-io.sockets.on('connection', function(socket){
+io.on('connection', function(socket){
   socket.emit('message', 'You are connected!');
+  game.addPlayer('Beeker');
 
-  socket.on('new GPS coord', processData);
+  socket.on('new GPS coord', function (data) {
+    console.log(data)
+    game.addGPS(data.name, data.gps)
+    // var winner = game.detectCollision()
+    var winner = '';
+    var response = {'players': game.players, 'winner': winner}
+    // {player1: {[{lat: ?, long: ?}], score: 0}, player2: {[{lat: ?, long: ?}], score: 0}], winner: ''}
+    socket.emit('update map', response)
+
+  });
 });
 
 // {name,GPS}
 
-function processData(data) {
-  console.log(data)
-  game.players[data.name].addGPS(data.gps)
-
-//  var winner = game.detectCollision()
-  var response = {'players': game.players, 'winner': winner}
-  // {player1: {[{lat: ?, long: ?}], score: 0}, player2: {[{lat: ?, long: ?}], score: 0}], winner: ''}
-  socket.broadcast.emit('update map', response)
-
-}
+// function processData(data) {
+//   console.log(data)
+//   game.addGPS(data.name, data.gps)
+//
+//   // var winner = game.detectCollision()
+//   var winner = [];
+//   var response = {'players': game.players, 'winner': winner}
+//   // {player1: {[{lat: ?, long: ?}], score: 0}, player2: {[{lat: ?, long: ?}], score: 0}], winner: ''}
+//   socket.broadcast.emit('update map', response)
+//
+// }
 
 const port = 3000;
 http.listen(port, () => console.log('listening on port ' + port));
