@@ -71,7 +71,7 @@ app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, './', 'index.html'));
 });
 
-io.on('connection', function(socket){
+socket.on('connection', function(socket){
   socket.on('new GPS coord', processData);
 });
 
