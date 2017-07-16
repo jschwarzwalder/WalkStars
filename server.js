@@ -82,6 +82,7 @@ io.on('connection', function(socket){
   socket.on('new GPS coord', function (data) {
     console.log(data)
     game.addGPS(data.name, data.gps)
+    console.log(game.players.currentGPS)
     // var winner = game.detectCollision()
     var winner = '';
     var response = {'players': game.players, 'winner': winner}
