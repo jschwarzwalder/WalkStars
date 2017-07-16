@@ -13,6 +13,8 @@ function GPS(arr){
   this.alt = 0
 }
 
+var markers = {}
+
 setInterval(sendCurrentPosition, 1000);
 
 var userGPS
@@ -30,7 +32,7 @@ function sendCurrentPosition () {
 }
 
 socket.on('update map', function (data) {
-  console.log(data);
+  // console.log(data);
   updateMap(data);
 });
 
@@ -40,6 +42,16 @@ function updateMap(data) {
 
   if (winner === ''){
     for (var name in data.players) {
+        if (name in markers) {
+            markers[name].setPosition(data.players[name].currentGPS);
+            console.log("Update Marker")
+        }
+        else {
+            console.log("Create Marker")
+            var marker = new H.map.Marker(data.players[name].currentGPS);
+            map.addObject(marker);
+            markers[name] = marker;
+        }
         data.players[name].currentGPS
     }
 
