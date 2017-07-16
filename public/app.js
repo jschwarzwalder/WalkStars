@@ -8,15 +8,15 @@ var x = document.getElementById("demo");
 var socket = io.connect('https://walkstars.herokuapp.com');
 
 socket.on('message', function(message) {
-    
+
 })
 
 
 // client game model
 
-function GPS(lat, long){
+function GPS(lat, lng){
   this.lat = lat;
-  this.lng = long;
+  this.lng = lng;
 }
 
 var markers = {}
@@ -60,7 +60,7 @@ var game = new Game();
 
 game.player = new Player('Beeker');
 
-setInterval(sendCurrentPosition, 1000);
+var intRef = setInterval(sendCurrentPosition, 1000);
 
 var userGPS
 
@@ -72,7 +72,7 @@ function sendCurrentPosition () {
       userGPS = new GPS(lat, lng);
       socket.emit('new GPS coord', {'name': 'Beeker', 'gps': userGPS});
     },
-    function(err){ 
+    function(err){
         console.log("Geolocation Error");
     }
   );
@@ -88,7 +88,7 @@ function updateMap(data) {
   var winner = data.winner;
 
   if (winner === ''){
-    
+
     game.addPlayerLocations(data.players);
 
     for (var name in data.players) {
