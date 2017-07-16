@@ -8,9 +8,9 @@ const io = require('socket.io')(http);
 const POINTS_PER_COLLISION = 1;
 const POINTS_FOR_VICTORY = 5;
 
-function GPS(lat, long){
+function GPS(lat, lng){
   this.lat = lat;
-  this.long = long;
+  this.lng = lng;
 }
 
 function Game(){
@@ -86,10 +86,10 @@ io.on('connection', function(socket){
     var winner = '';
     var response = {'players': game.players, 'winner': winner}
     // {player1: {[{lat: ?, long: ?}], score: 0}, player2: {[{lat: ?, long: ?}], score: 0}], winner: ''}
-    socket.emit('update map', response)
+    io.emit('update map', response)
 
   });
 });
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 http.listen(port, () => console.log('listening on port ' + port));
