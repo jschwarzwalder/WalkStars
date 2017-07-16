@@ -1,12 +1,20 @@
 const express = require('express')
 const app = express();
-
+const http = require('http').Server(app);
 const path = require('path');
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 app.use('/public', express.static('public'));
 
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, './', 'index.html'));
+});
+
+io.on('connection', function(socket){
+  socket.on('map update', function(msg){
+    io.emit('map update', msg);
+  });
 });
 
 app.listen(3000, function () {
