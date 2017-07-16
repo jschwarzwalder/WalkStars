@@ -2,8 +2,6 @@ var x = document.getElementById("demo");
 
 var socket = io();
 
-socket.on('new GPS coords', sendMapCoordinates);
-
 function GPS(lat, long){
   this.lat = lat;
   this.long = long;
@@ -12,15 +10,19 @@ function GPS(lat, long){
 var userGPS = new GPS()
 
 
+socket.on('new GPS coords', sendMapCoordinates);
+
 function sendMapCoordinates() {
-  socket.emit('new GPS cood', userGPS)
+  socket.emit('new GPS coord', userGPS)
 }
 
 socket.on('update map', updateMap);
 
 function updateMap(data) {
-
+  data.player1
+  data.player2
 }
+
 
 
 function getLocation() {
