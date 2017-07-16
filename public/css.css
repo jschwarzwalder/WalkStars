@@ -1,0 +1,16 @@
+html, body {
+    background-color: #0C090A;
+}
+
+.header {
+    background-color: #0C090A;
+    color: #F0F8FF;
+    font-family: 'Comfortaa', cursive;
+}
+
+#map {
+  height: 80vh;
+  width: 100vw;
+  position: absolute;
+  
+}
