@@ -4,21 +4,48 @@ const http = require('http').Server(app);
 const path = require('path');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+const collision = require('collision').PlayerCollision;
+
+const POINTS_PER_COLLISION = 1;
+const POINTS_FOR_VICTORY = 5;
 
 function Game(){
-  this.players = [];
+  this.players = {};
   this.winner = '';
   this.playerPaths = {}
 }
 
 Game.prototype.addPlayer = function (name) {
-  this.players.push(name: new Player(name));
+  this.players[name] = new Player(name);
   this.playerPaths[name] = [];
 };
 
 Game.prototype.detectCollision = function () {
+    var collidedPlayers = []
+    Object.keys(this.playerPaths).forEach(function(name1, index1) {
+        this.playerPaths[name1]
+        Object.keys(this.playerPaths.forEach(function(name2, index2) {
+            //players cannot collide with themselves
+            if (index1 == index2) {
+                return;
+            }
+            if (collision(this.playerPaths[name1], this.playerPaths[name2])) {
+                if (!collision(this.playerPaths[name2], this.playerPaths[name1])) {
+                    this.players[name2].score += POINTS_PER_COLLISION
+                }
+                collidedPlayers.push(name1);
+            }
+        })
+    })
+    
+    Object.keys(this.playerPaths).forEach(function(name, index) {
+        if (this.players[name].score >= POINTS_FOR_VICTORY) {
+            return name
+        }
+    }
+    
+    return ''
 
-//  return BOOL
 };
 
 function Player(name){
