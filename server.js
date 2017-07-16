@@ -2,9 +2,8 @@ const express = require('express')
 const app = express();
 const http = require('http').Server(app);
 const path = require('path');
-var http = require('http').Server(app);
 var io = require('socket.io')(http);
-const collision = require('collision').PlayerCollision;
+const collision = require('./collision').PlayerCollision;
 
 const POINTS_PER_COLLISION = 1;
 const POINTS_FOR_VICTORY = 5;
@@ -24,7 +23,7 @@ Game.prototype.detectCollision = function () {
     var collidedPlayers = []
     Object.keys(this.playerPaths).forEach(function(name1, index1) {
         this.playerPaths[name1]
-        Object.keys(this.playerPaths.forEach(function(name2, index2) {
+        Object.keys(this.playerPaths).forEach(function(name2, index2) {
             //players cannot collide with themselves
             if (index1 == index2) {
                 return;
@@ -42,7 +41,7 @@ Game.prototype.detectCollision = function () {
         if (this.players[name].score >= POINTS_FOR_VICTORY) {
             return name
         }
-    }
+    })
     
     return ''
 
@@ -80,7 +79,7 @@ function processData(data) {
   var winner = game.detectCollision()
   var response = {'players': game.players, 'winner': winner}
   // {player1: {[{lat: ?, long: ?}], score: 0}, player2: {[{lat: ?, long: ?}], score: 0}], winner: ''}
-  socket.broadcast.emit('update map', response))
+  socket.broadcast.emit('update map', response)
 
 }
 
