@@ -86,6 +86,7 @@ io.on('connection', function(socket){
     var winner = '';
     var response = {'players': game.players, 'winner': winner}
     // {player1: {[{lat: ?, long: ?}], score: 0}, player2: {[{lat: ?, long: ?}], score: 0}], winner: ''}
+
     io.emit('update map', response)
 
   });
