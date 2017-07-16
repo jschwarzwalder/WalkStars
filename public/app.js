@@ -2,7 +2,11 @@
 
 var x = document.getElementById("demo");
 
-var socket = io.connect('http://localhost:3000');
+//var socket = io.connect('http://localhost:3000');
+
+// production connect
+var socket = io.connect('https://walkstars.herokuapp.com');
+
 socket.on('message', function(message) {
     
 })
@@ -106,11 +110,14 @@ function updateMap(data) {
 
   var animate = true
   var oldCenter = map.getCenter();
-  if (oldCenter.lat == userGPS.lat && oldCenter.lng == userGPS.lng) {
-      animate = false
+  if(userGPS && oldCenter){
+    if (oldCenter.lat == userGPS.lat && oldCenter.lng == userGPS.lng) {
+        animate = false;
+    }
+    console.log(userGPS);
+    map.setCenter({lat: userGPS.lat[0], lng: userGPS.lat[1]});
+    map.setZoom(16);
   }
-  map.setCenter(userGPS, animate);
-  map.setZoom(16);
 }
 
 var platform = new H.service.Platform({
