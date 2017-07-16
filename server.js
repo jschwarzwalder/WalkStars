@@ -65,6 +65,10 @@ Game.prototype.addGPS = function (name, gps) {
 
 var game = new Game();
 
+// var cors = require('cors')
+ 
+// app.use(cors());
+
 app.use('/public', express.static('public'));
 
 app.get('/', function (req, res) {
@@ -87,23 +91,5 @@ io.on('connection', function(socket){
   });
 });
 
-// {name,GPS}
-
-// function processData(data) {
-//   console.log(data)
-//   game.addGPS(data.name, data.gps)
-//
-//   // var winner = game.detectCollision()
-//   var winner = [];
-//   var response = {'players': game.players, 'winner': winner}
-//   // {player1: {[{lat: ?, long: ?}], score: 0}, player2: {[{lat: ?, long: ?}], score: 0}], winner: ''}
-//   socket.broadcast.emit('update map', response)
-//
-// }
-
 const port = 3000;
 http.listen(port, () => console.log('listening on port ' + port));
-
-// app.listen(3000, function () {
-//   console.log('Example app listening on port 3000!')
-// })
