@@ -12,7 +12,7 @@ function Game(){
 }
 
 Game.prototype.addPlayer = function (name) {
-  this.players.push(name: new Player(name));
+  this.players[name] = new Player(name);
   this.playerPaths[name] = [];
 };
 
