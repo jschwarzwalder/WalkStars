@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Walk Stars</title>
+  <head>
+    <meta charset="UTF-8">
+    <title>Walk Stars</title>
 
-   <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -40,26 +40,28 @@
     <![endif]-->
     <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./public/css.css"/>
-</head>
+  </head>
   <body>
     <div class="container-fluid">
-        <div class="header clearfix">
-            <div class="page-header header">
-                <h1 class="text-center"><span class="glyphicon glyphicon-star" aria-hidden=true></span> Walk Stars <span class="glyphicon glyphicon-star" aria-hidden=true></span> </h1>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 text-center ">
-                    <h3><span class="label label-info" id="player_name">Player 1</span></h3>
-                    <h3 id="player_score">0</h3>
-                </div>
-                
-            </div>
+      <div class="header clearfix">
+        <div class="page-header header">
+          <h1 class="text-center"><span class="glyphicon glyphicon-star" aria-hidden=true></span> Walk Stars <span class="glyphicon glyphicon-star" aria-hidden=true></span> </h1>
         </div>
-    </div>
-                    <div id="map" style="width: 100vw; height: 80vh; background: grey"></div>
-                    <script src="/socket.io/socket.io.js"></script>
-                    <script type="text/javascript" src='public/app.js'></script>
+        <div class="row">
+          <div class="col-xs-12 text-center ">
+            <script src="./public/nameKeeper.js" type="text/javascript" language="JavaScript"></script>
+            <h3><span class="label label-info" id="player_name">Player 1</span></h3>
+            <script>displayName()</script>
+            <h3 id="player_score">0</h3>
+          </div>
 
-                    <script src="public/geocode.js"> </script>
+        </div>
+      </div>
+    </div>
+    <div id="map" style="width: 100vw; height: 80vh; background: grey"></div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src='public/app.js'></script>
+
+    <script src="public/geocode.js"> </script>
   </body>
 </html>
