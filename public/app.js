@@ -87,7 +87,7 @@ function updateMap(data) {
 
   if (winner === ''){
     
-    Game.addPlayerLocations(data.players);
+    game.addPlayerLocations(data.players);
 
     for (var name in data.players) {
         data.players[name].currentGPS
@@ -100,9 +100,10 @@ function updateMap(data) {
   var animate = true
   var oldCenter = map.getCenter();
   if (oldCenter.lat == userGPS.lat && oldCenter.lng == userGPS.lat) {
-      animate = false
+      animate = false;
   }
-  map.setCenter(userGPS, animate);
+  console.log(userGPS)
+  map.setCenter({lat: userGPS.lat[0], lng: userGPS.lat[1]});
   map.setZoom(16);
 }
 
