@@ -8,9 +8,9 @@ const io = require('socket.io')(http);
 const POINTS_PER_COLLISION = 1;
 const POINTS_FOR_VICTORY = 5;
 
-function GPS(lat, long){
-  this.lat = lat;
-  this.long = long;
+function GPS(arr){
+  this.lat = arr[0];
+  this.long = arr[1];
 }
 
 function Game(){

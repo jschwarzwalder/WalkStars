@@ -7,10 +7,51 @@ socket.on('message', function(message) {
     alert('The server has a message for you: ' + message);
 })
 
-function GPS(arr){
-  this.lat = arr[0];
-  this.long = arr[1];
+// client game model
+
+function GPS(lat, long){
+  this.lat = lat;
+  this.long = long;
 }
+
+function Game(){
+  this.players = {};
+  this.winner = '';
+  this.playerPaths = {}
+}
+
+// Game.prototype.addPlayer = function (name) {
+//   this.players[name] = new Player(name);
+//   this.playerPaths[name] = [];
+// };
+
+function Player(name){
+  this.name = name;
+  this.currentGPS;
+  this.score = 0;
+}
+
+Game.prototype.addGPS = function (name, gps) {
+  if (this.playerPaths[name]){
+    this.playerPaths[name] = [];
+  }
+  this.playerPaths[name].push(gps);
+};
+
+Game.prototype.addPlayerLocations = function (players) {
+  for (var name in players) {
+    if (object.hasOwnProperty(name)) {
+      this.addGPS(players[name].currentGPS);
+    }
+  }
+
+};
+
+var game = new Game();
+
+game.player = new Player('Beeker');
+
+// communication with the server
 
 setInterval(sendCurrentPosition, 1000);
 
