@@ -37,3 +37,20 @@ function showPosition(position) {
   map.setCenter({latlon});
   map.setZoom(14);
 }
+var pointList = JSON.parse(new FileReader("./points.json");
+
+var points = JSON.parse(pointList);
+
+var strip = new H.geo.Strip();
+points.forEach(function(point) {
+  strip.pushPoint(point);
+});
+
+// Initialize a polyline with the strip:
+var polyline = new H.map.Polyline(strip, { style: { lineWidth: 10 }});
+
+// Add the polyline to the map:
+map.addObject(polyline);
+
+// Zoom the map to make sure the whole polyline is visible:
+map.setViewBounds(polyline.getBounds());
