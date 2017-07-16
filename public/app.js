@@ -32,6 +32,7 @@ function Player(name){
 }
 
 Game.prototype.addGPS = function (name, gps) {
+  this.players[name].currentGPS = gps;
   if (this.playerPaths[name]){
     this.playerPaths[name] = [];
   }
@@ -40,9 +41,10 @@ Game.prototype.addGPS = function (name, gps) {
 
 Game.prototype.addPlayerLocations = function (players) {
   for (var name in players) {
-    if (object.hasOwnProperty(name)) {
-      this.addGPS(name, players[name].currentGPS);
+    if (!this.players.hasOwnProperty(name)) {
+      this.addPlayer(name);
     }
+    this.addGPS(name, players[name].currentGPS);
   }
 
 };
