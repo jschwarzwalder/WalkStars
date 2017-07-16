@@ -14,26 +14,25 @@ function GPS(arr){
 
 setInterval(sendCurrentPosition, 1000);
 
-function sendCurrentPosition () {
-  var coords = getLocation();
-  coords = [47.608013, -122.335167];
-  var userGPS = new GPS(coords);
-  socket.emit('new GPS coord', {'name': 'Beeker', 'gps': userGPS});
-}
+var userGPS
+var coords = [0,0]
 
-function getLocation() {
+function sendCurrentPosition () {
   navigator.geolocation.getCurrentPosition(
     function(position) {
       var lat = position.coords.latitude;
-      var long = position.coords.longitude;
-      return [lat,long];
+      var lng = position.coords.longitude;
+      coords = [lat, lng]
+      userGPS = new GPS(coords);
+      socket.emit('new GPS coord', {'name': 'Beeker', 'gps': userGPS});
     },
-    function(err){ document.getElementById('map').innerHTML = 'Geolocation Error'; }
+    function(err){ document.getElementById('map').innerHTML = 'Geolocation Error';}
   );
 }
 
 socket.on('update map', function (data) {
   console.log(data);
+  updateMap(data);
 });
 
 function updateMap(data) {
