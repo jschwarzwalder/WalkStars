@@ -1,10 +1,10 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Walk Stars</title>
-
-   <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+ <head>
+   <meta charset="UTF-8">
+   <title>Walk Stars</title>
+ 
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -26,12 +26,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <script src="/socket.io/socket.io.js"></script>
-
-
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -49,7 +43,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-8 col-xs-offset-2">
-                    <form>
+                    <form method="get">
                     <div class="row">
                         
                         <div class="col-xs-12">
@@ -65,11 +59,10 @@
                     
                     <div class="row">
                         <div class="col-xs-8 col-xs-offset-2  text-center">
+                            <script src="./public/nameKeeper.js" type="text/javascript" language="JavaScript"></script>
                             <!-- update id="player_name"  with player's name-->
-                            <script src="./nameKeeper.js" type="text/javascript" language="JavaScript"></script>
                             <p><button type="submit"  class="btn btn-info"
                               onClick="getName();">Begin Game</button> </p>
-                            
                         </div>
                     
                     </div>
@@ -78,6 +71,14 @@
             </div>
         </div> 
     </div>
+    <script>
+    function getName(){
+        getName.staticProperty = document.getElementById('player_name').value;
+    }
+    function displayName (vari){
+        document.getElementById('player_name').innerHTML = getName.staticProperty;
+    }
+    </script>
    </body>
 </html>           
    

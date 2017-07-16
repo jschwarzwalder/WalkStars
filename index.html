@@ -57,7 +57,13 @@
     <div id="map" style="width: 100vw; height: 80vh; background: grey"></div>
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src='public/app.js'></script>
-
-    <script src="public/geocode.js"> </script>
+    <script>
+    function getName(){
+        getName.staticProperty = document.getElementById('player_name').value;
+    }
+    function displayName (vari){
+        document.getElementById('player_name').innerHTML = getName.staticProperty;
+    }
+    </script>
   </body>
 </html>
