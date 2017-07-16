@@ -115,7 +115,7 @@ function updateMap(data) {
         animate = false;
     }
     console.log(userGPS);
-    map.setCenter({lat: userGPS.lat[0], lng: userGPS.lat[1]});
+    map.setCenter(userGPS);
     map.setZoom(16);
   }
 }
