@@ -1,21 +1,16 @@
-html {
-  min-width: 0%;
+html, body {
+    background-color: #0C090A;
 }
-h1.title {
-  position: absolute;
-  margin-left: 500px;
-}
-#map {
-  position: absolute;
-  top: 10;
-  left: 10;
-  background-color: blue;
-}
-.col-xs-12, .panel, .container{
-  height: 100%;
-}     
 
-div {
-  width: 100vh;
-  max-width: 1200px;
+.header {
+    background-color: #0C090A;
+    color: #F0F8FF;
+    font-family: 'Comfortaa', cursive;
+}
+
+#map {
+  height: 80vh;
+  width: 100vw;
+  position: absolute;
+  
 }
