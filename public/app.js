@@ -2,15 +2,17 @@ var x = document.getElementById("demo");
 
 var socket = io();
 
-socket.on('new GPS coords', sendMapCoordinates);
+socket.on('new GPS coords', function(e){
+  console.log(e);
+});
 
 function sendMapCoordinates() {
   socket.emit('new GPS coords', userGPS);
-  console.log('userGPS: ', userGPS);
+ // console.log('userGPS: ', userGPS);
   //console.log(args)
 }
 
-var userGPS = new GPS()
+var userGPS = new GPS();
 
 userGPS.continuousGeocode();
 

@@ -12,9 +12,14 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', function(socket){
+  console.log(socket, 'socket');
   socket.on('map update', function(msg){
     io.emit('map update', msg);
   });
+
+  socket.on('new GPS coords', function(e){
+ console.log(' gps ', e)
+});
 
   socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
 });
@@ -26,6 +31,8 @@ function processData() {
 socket.broadcast.emit('update map', data)
 
 }
+
+
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
