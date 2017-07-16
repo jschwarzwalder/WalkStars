@@ -3,7 +3,7 @@ const app = express();
 const http = require('http').Server(app);
 const path = require('path');
 const collision = require('./collision').PlayerCollision;
-var socket = require('socket.io')(http);
+const io = require('socket.io')(http);
 
 const POINTS_PER_COLLISION = 1;
 const POINTS_FOR_VICTORY = 5;
@@ -50,7 +50,6 @@ Game.prototype.detectCollision = function () {
 
     return ''
 
-//  return winner
 };
 
 function Player(name){
@@ -72,23 +71,28 @@ app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, './', 'index.html'));
 });
 
-socket.on('connection', function(socket){
+io.sockets.on('connection', function(socket){
+  socket.emit('message', 'You are connected!');
+
   socket.on('new GPS coord', processData);
 });
 
 // {name,GPS}
 
 function processData(data) {
-
+  console.log(data)
   game.players[data.name].addGPS(data.gps)
 
-  var winner = game.detectCollision()
+//  var winner = game.detectCollision()
   var response = {'players': game.players, 'winner': winner}
   // {player1: {[{lat: ?, long: ?}], score: 0}, player2: {[{lat: ?, long: ?}], score: 0}], winner: ''}
   socket.broadcast.emit('update map', response)
 
 }
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
-})
+const port = 3000;
+http.listen(port, () => console.log('listening on port ' + port));
+
+// app.listen(3000, function () {
+//   console.log('Example app listening on port 3000!')
+// })

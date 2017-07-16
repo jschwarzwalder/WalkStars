@@ -1,21 +1,26 @@
 var x = document.getElementById("demo");
 
-var socket = io();
+var socket = io.connect('http://localhost:3000');
+socket.on('message', function(message) {
+    alert('The server has a message for you: ' + message);
+})
 
 function GPS(arr){
   this.lat = arr[0];
   this.long = arr[1];
 }
 
-setInterval(sendCurrentPostion, 1000);
+setInterval(sendCurrentPosition, 1000);
 
 socket.on('new GPS coords', function(e){
   console.log(e);
 });
 
-function sendCurrentPostion () {
+function sendCurrentPosition () {
   var coords = getLocation();
+  coords = [47.608013, -122.335167];
   var userGPS = new GPS(coords);
+  console.log(userGPS)
   socket.emit('new GPS coords', {'gps': userGPS});
 }
 
@@ -36,16 +41,6 @@ function updateMap(data) {
   console.log(data);
 
 }
-
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(moveMapToCurrentGps);
-    } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
-    }
-}
-
-
 
 var platform = new H.service.Platform({
   'app_id': 'ppxc8S78pismSdspOtop',
