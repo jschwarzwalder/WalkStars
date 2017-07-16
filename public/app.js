@@ -1,4 +1,4 @@
-var geo = require('./geocode.js');
+//var geo = require('./geocode.js');
 
 var x = document.getElementById("demo");
 
@@ -41,20 +41,20 @@ function showPosition(position) {
   map.setCenter({latlon});
   map.setZoom(14);
 }
-var pointList = JSON.parse(geo.a);
+//var pointList = JSON.parse(geo.a);
 
-var points = JSON.parse(pointList);
+//var points = JSON.parse(pointList);
 
-var strip = new H.geo.Strip();
-points.forEach(function(point) {
-  strip.pushPoint(point);
-});
+//var strip = new H.geo.Strip();
+//points.forEach(function(point) {
+  //strip.pushPoint(point);
+//});
 
-// Initialize a polyline with the strip:
-var polyline = new H.map.Polyline(strip, { style: { lineWidth: 10 }});
+//// Initialize a polyline with the strip:
+//var polyline = new H.map.Polyline(strip, { style: { lineWidth: 10 }});
 
-// Add the polyline to the map:
-map.addObject(polyline);
+//// Add the polyline to the map:
+//map.addObject(polyline);
 
 // Zoom the map to make sure the whole polyline is visible:
 //map.setViewBounds(polyline.getBounds());
