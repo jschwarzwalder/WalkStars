@@ -1,4 +1,4 @@
-function continuousGeocode(){
+functivarion continuousGeocode(){
   setTimeout(
     function(){
     // document.getElementById('loc').textContent = 'hi! ';
