@@ -1,16 +1,16 @@
 
 
-function PlayerCrossesStrip(playerStrip, strip) {
-    if (strip.getPointCount() < 2 || playerString.getPointCount() < 2) {
+function PlayerCrossesStrip(playerPath, enemyPath) {
+    if (enemyPath.length < 2 || playerPath.length < 2) {
         return false;
     }    
     
-    var playerPoint = playerStrip.extractPoint(playerStrip.getPointCount()-1)
-    var prevPlayerPoint = playerStrip.extractPoint(playerStrip.getPointCount()-2)
+    var playerPoint = playerPath[playerPath.length-1]
+    var prevPlayerPoint = playerPath[playerPath.length-2]
     
-    var prevPoint = strip.extractPoint(0);
-    for (var i = 1; i < strip.getPointCount(); ++i) {
-        var point = strip.extractPoint(i);
+    var prevPoint = enemyPath[0];
+    for (var i = 1; i < enemyPath.length; ++i) {
+        var point = enemyPath[i];
         
         if (LineLineCollision(playerPoint, prevPlayerPoint, prevPoint, point) {
             return true
