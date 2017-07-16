@@ -2,15 +2,32 @@ var x = document.getElementById("demo");
 
 var socket = io();
 
-function GPS(lat, long){
-  this.lat = lat;
-  this.long = long;
+function GPS(arr){
+  this.lat = arr[0];
+  this.long = arr[1];
 }
 
-var userGPS = new GPS();
+setInterval(sendCurrentPostion, 1000);
 
-function sendMapCoordinates() {
-  socket.emit('new GPS coord', userGPS)
+socket.on('new GPS coords', function(e){
+  console.log(e);
+});
+
+function sendCurrentPostion () {
+  var coords = getLocation();
+  var userGPS = new GPS(coords);
+  socket.emit('new GPS coords', {'gps': userGPS});
+}
+
+function getLocation() {
+  navigator.geolocation.getCurrentPosition(
+    function(position) {
+      var lat = position.coords.latitude;
+      var long = position.coords.longitude;
+      return [lat,long];
+    },
+    function(err){ document.getElementById('map').innerHTML = 'Geolocation Error'; }
+  );
 }
 
 socket.on('update map', updateMap);
