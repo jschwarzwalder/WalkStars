@@ -2,10 +2,10 @@
   "name": "walkstars",
   "version": "0.0.1",
   "description": "A GPS Based Tron game",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
