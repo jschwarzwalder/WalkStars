@@ -7,11 +7,54 @@ socket.on('message', function(message) {
     alert('The server has a message for you: ' + message);
 })
 
-function GPS(arr){
-  this.lat = arr[0];
-  this.lng = arr[1];
-  this.alt = 0
+
+// client game model
+
+function GPS(lat, long){
+  this.lat = lat;
+  this.lng = long;
 }
+
+function Game(){
+  this.players = {};
+  this.winner = '';
+  this.playerPaths = {}
+}
+
+Game.prototype.addPlayer = function (name) {
+   this.players[name] = new Player(name);
+   this.playerPaths[name] = [];
+};
+
+function Player(name){
+  this.name = name;
+  this.currentGPS;
+  this.score = 0;
+}
+
+Game.prototype.addGPS = function (name, gps) {
+  this.players[name].currentGPS = gps;
+  if (this.playerPaths[name]){
+    this.playerPaths[name] = [];
+  }
+  this.playerPaths[name].push(gps);
+};
+
+Game.prototype.addPlayerLocations = function (players) {
+  for (var name in players) {
+    if (!this.players.hasOwnProperty(name)) {
+      this.addPlayer(name);
+    }
+    this.addGPS(name, players[name].currentGPS);
+  }
+
+};
+
+var game = new Game();
+
+game.player = new Player('Beeker');
+
+// communication with the server
 
 setInterval(sendCurrentPosition, 1000);
 
@@ -39,6 +82,9 @@ function updateMap(data) {
   var winner = data.winner;
 
   if (winner === ''){
+    
+    Game.addPlayerLocations(data.players);
+
     for (var name in data.players) {
         data.players[name].currentGPS
     }
