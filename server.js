@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express();
-const http = require('http').Server(app);
+//const http = require('http').Server(app);
 const path = require('path');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -23,7 +23,7 @@ function processData() {
 
 
 
-socket.broadcast.emit('update map', data))
+socket.broadcast.emit('update map', data)
 
 }
 

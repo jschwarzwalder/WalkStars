@@ -4,16 +4,35 @@ var socket = io();
 
 socket.on('new GPS coords', sendMapCoordinates);
 
-function GPS(lat, long){
-  this.lat = lat;
-  this.long = long;
+function sendMapCoordinates() {
+  socket.emit('new GPS coords', userGPS);
+  console.log('userGPS: ', userGPS);
+  //console.log(args)
 }
 
 var userGPS = new GPS()
 
+userGPS.continuousGeocode();
 
-function sendMapCoordinates() {
-  socket.emit('new GPS cood', userGPS)
+function GPS(lat, long){
+  this.lat = lat;
+  this.long = long;
+    this.continuousGeocode = function(){
+        let that = this;
+        if (navigator && navigator.geolocation) {
+           setTimeout(
+            function(){
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    that.lat = position.coords.latitude;
+                    that.long = position.coords.longitude;
+                    sendMapCoordinates();
+                    that.continuousGeocode();
+                }, function(err){  document.getElementById('map').innerHTML = 'Geolocation Error'; });
+            }, 1000);
+       } else {
+          document.getElementById('map').innerHTML = 'No Geolocation';
+       }
+    }
 }
 
 socket.on('update map', updateMap);
@@ -25,9 +44,9 @@ function updateMap(data) {
 
 function getLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(moveMapToCurrentGps);
+       // navigator.geolocation.getCurrentPosition(moveMapToCurrentGps);
     } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
+       // x.innerHTML = "Geolocation is not supported by this browser.";
     }
 }
 
