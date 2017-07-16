@@ -82,12 +82,9 @@ function updateMap(data) {
   var winner = data.winner;
 
   if (winner === ''){
-    for (var name in data.players) {
-      if (object.hasOwnProperty(name)) {
-        data.players[name].currentGPS
-      }
-    }
 
+    Game.addPlayerLocations(data.players);
+    
   } else {
     alert(winner + ' won the game!');
   }
