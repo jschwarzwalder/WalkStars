@@ -1,9 +1,24 @@
 var x = document.getElementById("demo");
 
+var socket = io();
+
+socket.on('new GPS coords', sendMapCoordinates);
+
+function sendMapCoordinates() {
+
+}
+
+socket.on('update map', updateMap);
+
+function updateMap() {
+  
+}
+
+
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(moveMapToCurrentGps);
-    } else { 
+    } else {
         x.innerHTML = "Geolocation is not supported by this browser.";
     }
 }
