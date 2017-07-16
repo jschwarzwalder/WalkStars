@@ -1,4 +1,6 @@
-
+html, body {
+    background-color: #0C090A;
+}
 
 .header {
     background-color: #0C090A;
@@ -7,7 +9,7 @@
 }
 
 #map {
-  height: 100vh;
+  height: 80vh;
   width: 100vw;
   position: absolute;
   
