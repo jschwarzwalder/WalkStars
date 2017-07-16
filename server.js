@@ -8,9 +8,9 @@ const io = require('socket.io')(http);
 const POINTS_PER_COLLISION = 1;
 const POINTS_FOR_VICTORY = 5;
 
-function GPS(lat, lng){
-  this.lat = lat;
-  this.lng = lng;
+function GPS(arr){
+  this.lat = arr[0];
+  this.lng = arr[1];
 }
 
 function Game(){
@@ -82,6 +82,7 @@ io.on('connection', function(socket){
   socket.on('new GPS coord', function (data) {
     console.log(data)
     game.addGPS(data.name, data.gps)
+    console.log(game.players.currentGPS)
     // var winner = game.detectCollision()
     var winner = '';
     var response = {'players': game.players, 'winner': winner}

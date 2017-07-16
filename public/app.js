@@ -2,21 +2,21 @@
 
 var x = document.getElementById("demo");
 
-//var socket = io.connect('http://localhost:3000');
+var socket = io.connect('http://localhost:3000');
 
 // production connect
-var socket = io.connect('https://walkstars.herokuapp.com');
+// var socket = io.connect('https://walkstars.herokuapp.com');
 
 socket.on('message', function(message) {
-    
+
 })
 
 
 // client game model
 
-function GPS(lat, long){
+function GPS(lat, lng){
   this.lat = lat;
-  this.lng = long;
+  this.lng = lng;
 }
 
 var markers = {}
@@ -60,7 +60,7 @@ var game = new Game();
 
 game.player = new Player('Beeker');
 
-setInterval(sendCurrentPosition, 1000);
+var intRef = setInterval(sendCurrentPosition, 1000);
 
 var userGPS
 
@@ -72,7 +72,7 @@ function sendCurrentPosition () {
       userGPS = new GPS(lat, lng);
       socket.emit('new GPS coord', {'name': 'Beeker', 'gps': userGPS});
     },
-    function(err){ 
+    function(err){
         console.log("Geolocation Error");
     }
   );
@@ -88,7 +88,7 @@ function updateMap(data) {
   var winner = data.winner;
 
   if (winner === ''){
-    
+
     game.addPlayerLocations(data.players);
 
     for (var name in data.players) {
@@ -110,13 +110,9 @@ function updateMap(data) {
 
   var animate = true
   var oldCenter = map.getCenter();
-  if(userGPS && oldCenter){
-    if (oldCenter.lat == userGPS.lat && oldCenter.lng == userGPS.lng) {
-        animate = false;
-    }
+  if(userGPS){
     console.log(userGPS);
-    map.setCenter(userGPS);
-    map.setZoom(16);
+    map.setCenter(userGPS, animate);
   }
 }
 
@@ -130,25 +126,25 @@ var platform = new H.service.Platform({
 // Obtain the default map types from the platform object:
 var defaultLayers = platform.createDefaultLayers();
 
+var map
+navigator.geolocation.getCurrentPosition(
+function(position) {
+  var lat = position.coords.latitude;
+  var lng = position.coords.longitude;
+  userGPS = new GPS(lat, lng);
 // Instantiate (and display) a map object:
-var map = new H.Map(
+  map = new H.Map(
   document.getElementById('map'),
   defaultLayers.normal.map,
   {
-    zoom: 10,
-    center: { lat: 2.5, lng: 13.4 }
+    zoom: 16,
+    center: userGPS
   });
-
-/**
- * Moves the map to display over CurrentGps
- *
- * @param  {H.Map} map      A HERE Map instance within the application
- */
-function showPosition(position) {
-  var latlon = "lat:" + position.coords.latitude + "," + "lng:" + position.coords.longitude;
-  map.setCenter({latlon});
-  map.setZoom(14);
+},
+function(err){ 
+    console.log("Geolocation Error");
 }
+);
 
 // var points = JSON.parse(pointList);
 
