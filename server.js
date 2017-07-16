@@ -8,9 +8,9 @@ const io = require('socket.io')(http);
 const POINTS_PER_COLLISION = 1;
 const POINTS_FOR_VICTORY = 5;
 
-function GPS(lat, long){
-  this.lat = lat;
-  this.long = long;
+function GPS(arr){
+  this.lat = arr[0];
+  this.lng = arr[1];
 }
 
 function Game(){
@@ -86,7 +86,7 @@ io.on('connection', function(socket){
     var winner = '';
     var response = {'players': game.players, 'winner': winner}
     // {player1: {[{lat: ?, long: ?}], score: 0}, player2: {[{lat: ?, long: ?}], score: 0}], winner: ''}
-    socket.emit('update map', response)
+    io.emit('update map', response)
 
   });
 });

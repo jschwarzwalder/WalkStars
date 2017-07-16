@@ -4,16 +4,57 @@ var x = document.getElementById("demo");
 
 var socket = io.connect('http://localhost:3000');
 socket.on('message', function(message) {
-    alert('The server has a message for you: ' + message);
+    
 })
 
-function GPS(arr){
-  this.lat = arr[0];
-  this.lng = arr[1];
-  this.alt = 0
+
+// client game model
+
+function GPS(lat, long){
+  this.lat = lat;
+  this.lng = long;
 }
 
 var markers = {}
+
+function Game(){
+  this.players = {};
+  this.winner = '';
+  this.playerPaths = {}
+}
+
+Game.prototype.addPlayer = function (name) {
+   this.players[name] = new Player(name);
+   this.playerPaths[name] = [];
+};
+
+function Player(name){
+  this.name = name;
+  this.currentGPS;
+  this.score = 0;
+}
+
+Game.prototype.addGPS = function (name, gps) {
+  this.players[name].currentGPS = gps;
+  if (this.playerPaths[name]){
+    this.playerPaths[name] = [];
+  }
+  this.playerPaths[name].push(gps);
+};
+
+Game.prototype.addPlayerLocations = function (players) {
+  for (var name in players) {
+    if (!this.players.hasOwnProperty(name)) {
+      this.addPlayer(name);
+    }
+    this.addGPS(name, players[name].currentGPS);
+  }
+
+};
+
+var game = new Game();
+
+game.player = new Player('Beeker');
 
 setInterval(sendCurrentPosition, 1000);
 
@@ -24,10 +65,12 @@ function sendCurrentPosition () {
     function(position) {
       var lat = position.coords.latitude;
       var lng = position.coords.longitude;
-      userGPS = new GPS([lat, lng]);
+      userGPS = new GPS(lat, lng);
       socket.emit('new GPS coord', {'name': 'Beeker', 'gps': userGPS});
     },
-    function(err){ document.getElementById('map').innerHTML = 'Geolocation Error';}
+    function(err){ 
+        console.log("Geolocation Error");
+    }
   );
 }
 
@@ -41,18 +84,20 @@ function updateMap(data) {
   var winner = data.winner;
 
   if (winner === ''){
+    
+    game.addPlayerLocations(data.players);
+
     for (var name in data.players) {
+        console.log(data.players[name].currentGPS);
+
         if (name in markers) {
             markers[name].setPosition(data.players[name].currentGPS);
-            console.log("Update Marker")
         }
         else {
-            console.log("Create Marker")
             var marker = new H.map.Marker(data.players[name].currentGPS);
             map.addObject(marker);
             markers[name] = marker;
         }
-        data.players[name].currentGPS
     }
 
   } else {
@@ -61,7 +106,7 @@ function updateMap(data) {
 
   var animate = true
   var oldCenter = map.getCenter();
-  if (oldCenter.lat == userGPS.lat && oldCenter.lng == userGPS.lat) {
+  if (oldCenter.lat == userGPS.lat && oldCenter.lng == userGPS.lng) {
       animate = false
   }
   map.setCenter(userGPS, animate);
@@ -98,18 +143,18 @@ function showPosition(position) {
   map.setZoom(14);
 }
 
-var points = JSON.parse(pointList);
+// var points = JSON.parse(pointList);
 
-var strip = new H.geo.Strip();
-points.forEach(function(point) {
-  strip.pushPoint(point);
-});
+// var strip = new H.geo.Strip();
+// points.forEach(function(point) {
+  // strip.pushPoint(point);
+// });
 
 //// Initialize a polyline with the strip:
-var polyline = new H.map.Polyline(strip, { style: { lineWidth: 10 }});
+// var polyline = new H.map.Polyline(strip, { style: { lineWidth: 10 }});
 
 //// Add the polyline to the map:
-map.addObject(polyline);
+// map.addObject(polyline);
 
 // Zoom the map to make sure the whole polyline is visible:
-map.setViewBounds(polyline.getBounds());
+// map.setViewBounds(polyline.getBounds());
