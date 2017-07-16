@@ -8,26 +8,28 @@ var io = require('socket.io')(http);
 function Game(){
   this.players = [];
   this.winner = '';
+  this.playerPaths = {}
 }
 
 Game.prototype.addPlayer = function (name) {
   this.players.push(name: new Player(name));
+  this.playerPaths[name] = [];
 };
 
 Game.prototype.detectCollision = function () {
 
+//  return BOOL
 };
 
 function Player(name){
   this.name = name;
   this.currentGPS;
-  this.GPSlist = [];
   this.score = 0;
 }
 
-Player.prototype.addGPS = function (gps) {
-  this.currentGPS = gps;
-  this.GPSlist.push(gps);
+Game.prototype.addGPS = function (name, gps) {
+  this.name.currentGPS = gps;
+  this.GPSlist[name].push(gps);
 };
 
 var game = new Game();
@@ -39,21 +41,17 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', function(socket){
-  socket.on('map update', function(msg){
-    io.emit('map update', msg);
-  });
-
   socket.on('new GPS coord', processData);
 });
 
 // {name,GPS}
 
 function processData(data) {
+
   game.players[data.name].addGPS(data.gps)
-  game.detectCollision()
 
-  var
-
+  var winner = game.detectCollision()
+  var response = {'players': game.players, 'winner': winner}
   // {player1: {[{lat: ?, long: ?}], score: 0}, player2: {[{lat: ?, long: ?}], score: 0}], winner: ''}
   socket.broadcast.emit('update map', response))
 
