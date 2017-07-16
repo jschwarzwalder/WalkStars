@@ -50,10 +50,6 @@ Game.prototype.detectCollision = function () {
     
     return ''
 
-<<<<<<< Updated upstream
-=======
-//  return winner
->>>>>>> Stashed changes
 };
 
 function Player(name){
