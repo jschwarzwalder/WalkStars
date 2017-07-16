@@ -2,10 +2,10 @@
 
 var x = document.getElementById("demo");
 
-//var socket = io.connect('http://localhost:3000');
+var socket = io.connect('http://localhost:3000');
 
 // production connect
- var socket = io.connect('https://walkstars.herokuapp.com');
+ // var socket = io.connect('https://walkstars.herokuapp.com');
 
 socket.on('message', function(message) {
     
@@ -49,7 +49,7 @@ Game.prototype.addGPS = function (name, gps) {
       map.addObject(polyline);
       this.polylines[name] = polyline;
   } 
-  else {
+  else if (this.playerPaths[name].getPointCount() > 2){
       this.polylines[name].setStrip(this.playerPaths[name])
   }
   
