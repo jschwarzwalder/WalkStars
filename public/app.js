@@ -2,10 +2,10 @@
 
 var x = document.getElementById("demo");
 
-//var socket = io.connect('http://localhost:3000');
+var socket = io.connect('http://localhost:3000');
 
 // production connect
- var socket = io.connect('https://walkstars.herokuapp.com');
+ //var socket = io.connect('https://walkstars.herokuapp.com');
 
 socket.on('message', function(message) {
     
@@ -74,15 +74,15 @@ setInterval(sendCurrentPosition, 1000);
 var userGPS
 
 
-var iteration = 0
+//var iteration = 0
 
 function sendCurrentPosition () {
   navigator.geolocation.getCurrentPosition(
     function(position) {
       var lat = position.coords.latitude;
       var lng = position.coords.longitude;
-      userGPS = new GPS(lat + iteration *.00005, lng);
-      iteration++
+      userGPS = new GPS(lat, lng);
+      //iteration++
       socket.emit('new GPS coord', {'name': 'Beeker', 'gps': userGPS});
     },
     function(err){ 
@@ -157,9 +157,9 @@ var map = new H.Map(
  *
  * @param  {H.Map} map      A HERE Map instance within the application
  */
-function showPosition(position) {
-  var latlon = "lat:" + position.coords.latitude + "," + "lng:" + position.coords.longitude;
-  map.setCenter({latlon});
-  map.setZoom(14);
-}
+//function showPosition(position) {
+  //var latlon = "lat:" + position.coords.latitude + "," + "lng:" + position.coords.longitude;
+  //map.setCenter({latlon});
+  //map.setZoom(14);
+//}
 
