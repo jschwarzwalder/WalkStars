@@ -11,33 +11,74 @@ socket.on('message', function(message) {
     alert('The server has a message for you: ' + message);
 })
 
-function GPS(arr){
-  this.lat = arr[0];
-  this.long = arr[1];
+
+// client game model
+
+function GPS(lat, long){
+  this.lat = lat;
+  this.lng = long;
 }
+
+function Game(){
+  this.players = {};
+  this.winner = '';
+  this.playerPaths = {}
+}
+
+Game.prototype.addPlayer = function (name) {
+   this.players[name] = new Player(name);
+   this.playerPaths[name] = [];
+};
+
+function Player(name){
+  this.name = name;
+  this.currentGPS;
+  this.score = 0;
+}
+
+Game.prototype.addGPS = function (name, gps) {
+  this.players[name].currentGPS = gps;
+  if (this.playerPaths[name]){
+    this.playerPaths[name] = [];
+  }
+  this.playerPaths[name].push(gps);
+};
+
+Game.prototype.addPlayerLocations = function (players) {
+  for (var name in players) {
+    if (!this.players.hasOwnProperty(name)) {
+      this.addPlayer(name);
+    }
+    this.addGPS(name, players[name].currentGPS);
+  }
+
+};
+
+var game = new Game();
+
+game.player = new Player('Beeker');
+
+// communication with the server
 
 setInterval(sendCurrentPosition, 1000);
 
-function sendCurrentPosition () {
-  var coords = getLocation();
-  coords = [47.608013, -122.335167];
-  var userGPS = new GPS(coords);
-  socket.emit('new GPS coord', {'name': 'Beeker', 'gps': userGPS});
-}
+var userGPS
 
-function getLocation() {
+function sendCurrentPosition () {
   navigator.geolocation.getCurrentPosition(
     function(position) {
       var lat = position.coords.latitude;
-      var long = position.coords.longitude;
-      return [lat,long];
+      var lng = position.coords.longitude;
+      userGPS = new GPS([lat, lng]);
+      socket.emit('new GPS coord', {'name': 'Beeker', 'gps': userGPS});
     },
-    function(err){ document.getElementById('map').innerHTML = 'Geolocation Error'; }
+    function(err){ document.getElementById('map').innerHTML = 'Geolocation Error';}
   );
 }
 
 socket.on('update map', function (data) {
   console.log(data);
+  updateMap(data);
 });
 
 function updateMap(data) {
@@ -45,16 +86,24 @@ function updateMap(data) {
   var winner = data.winner;
 
   if (winner === ''){
+    
+    Game.addPlayerLocations(data.players);
+
     for (var name in data.players) {
-      if (object.hasOwnProperty(name)) {
         data.players[name].currentGPS
-      }
     }
 
   } else {
     alert(winner + ' won the game!');
   }
 
+  var animate = true
+  var oldCenter = map.getCenter();
+  if (oldCenter.lat == userGPS.lat && oldCenter.lng == userGPS.lat) {
+      animate = false
+  }
+  map.setCenter(userGPS, animate);
+  map.setZoom(16);
 }
 
 var platform = new H.service.Platform({
