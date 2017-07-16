@@ -2,15 +2,56 @@
 
 var x = document.getElementById("demo");
 
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(moveMapToCurrentGps);
-    } else { 
-        x.innerHTML = "Geolocation is not supported by this browser.";
-    }
+var socket = io.connect('http://localhost:3000');
+socket.on('message', function(message) {
+    alert('The server has a message for you: ' + message);
+})
+
+function GPS(arr){
+  this.lat = arr[0];
+  this.long = arr[1];
 }
 
+setInterval(sendCurrentPosition, 1000);
 
+function sendCurrentPosition () {
+  var coords = getLocation();
+  coords = [47.608013, -122.335167];
+  var userGPS = new GPS(coords);
+  socket.emit('new GPS coord', {'name': 'Beeker', 'gps': userGPS});
+}
+
+function getLocation() {
+  navigator.geolocation.getCurrentPosition(
+    function(position) {
+      var lat = position.coords.latitude;
+      var long = position.coords.longitude;
+      return [lat,long];
+    },
+    function(err){ document.getElementById('map').innerHTML = 'Geolocation Error'; }
+  );
+}
+
+socket.on('update map', function (data) {
+  console.log(data);
+});
+
+function updateMap(data) {
+  // console.log(data);
+  var winner = data.winner;
+
+  if (winner === ''){
+    for (var name in data.players) {
+      if (object.hasOwnProperty(name)) {
+        data.players[name].currentGPS
+      }
+    }
+
+  } else {
+    alert(winner + ' won the game!');
+  }
+
+}
 
 var platform = new H.service.Platform({
   'app_id': 'ppxc8S78pismSdspOtop',
