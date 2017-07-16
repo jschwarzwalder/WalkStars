@@ -41,19 +41,16 @@ Game.prototype.detectCollision = function () {
             }
         })
     })
-    
+
     Object.keys(this.playerPaths).forEach(function(name, index) {
         if (this.players[name].score >= POINTS_FOR_VICTORY) {
             return name
         }
     })
-    
+
     return ''
 
-<<<<<<< Updated upstream
-=======
 //  return winner
->>>>>>> Stashed changes
 };
 
 function Player(name){
@@ -75,7 +72,7 @@ app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, './', 'index.html'));
 });
 
-io.on('connection', function(socket){
+socket.on('connection', function(socket){
   socket.on('new GPS coord', processData);
 });
 
