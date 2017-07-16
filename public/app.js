@@ -4,14 +4,22 @@ var socket = io();
 
 socket.on('new GPS coords', sendMapCoordinates);
 
-function sendMapCoordinates() {
+function GPS(lat, long){
+  this.lat = lat;
+  this.long = long;
+}
 
+var userGPS = new GPS()
+
+
+function sendMapCoordinates() {
+  socket.emit('new GPS cood', userGPS)
 }
 
 socket.on('update map', updateMap);
 
-function updateMap() {
-  
+function updateMap(data) {
+
 }
 
 

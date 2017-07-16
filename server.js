@@ -15,7 +15,17 @@ io.on('connection', function(socket){
   socket.on('map update', function(msg){
     io.emit('map update', msg);
   });
+
+  socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
 });
+
+function processData() {
+
+
+
+socket.broadcast.emit('update map', data))
+
+}
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
