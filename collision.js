@@ -1,6 +1,6 @@
 
 
-function PlayerCrossesStrip(playerPath, enemyPath) {
+function PlayerCollision(playerPath, enemyPath) {
     if (enemyPath.length < 2 || playerPath.length < 2) {
         return false;
     }    
@@ -12,7 +12,7 @@ function PlayerCrossesStrip(playerPath, enemyPath) {
     for (var i = 1; i < enemyPath.length; ++i) {
         var point = enemyPath[i];
         
-        if (LineLineCollision(playerPoint, prevPlayerPoint, prevPoint, point) {
+        if (LineLineCollision(playerPoint, prevPlayerPoint, prevPoint, point)) {
             return true
         }
 
@@ -39,3 +39,5 @@ function LineLineCollision (a1, a2, b1, b2) {
     }
 
 };
+
+module.exports = {PlayerCollision: PlayerCollision}
