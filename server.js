@@ -2,11 +2,16 @@ const express = require('express')
 const app = express();
 const http = require('http').Server(app);
 const path = require('path');
-var io = require('socket.io')(http);
 const collision = require('./collision').PlayerCollision;
+var socket = require('socket.io')(http);
 
 const POINTS_PER_COLLISION = 1;
 const POINTS_FOR_VICTORY = 5;
+
+function GPS(lat, long){
+  this.lat = lat;
+  this.long = long;
+}
 
 function Game(){
   this.players = {};
