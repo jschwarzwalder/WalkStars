@@ -5,6 +5,11 @@ const path = require('path');
 var http = require('http').Server(app);
 var socket = require('socket.io')(http);
 
+function GPS(lat, long){
+  this.lat = lat;
+  this.long = long;
+}
+
 function Game(){
   this.players = [];
   this.winner = '';
