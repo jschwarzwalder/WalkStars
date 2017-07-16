@@ -4,6 +4,8 @@ function continuousGeocode(){
     // document.getElementById('loc').textContent = 'hi! ';
       navigator.geolocation.getCurrentPosition(function(position) {
         console.log('position', position);
+        var a = [ { } ];
+        a.push('position', position);
          //  document.getElementById('loc').textContent = 'hi! ' + position.coords.latitude + ' ' + position.coords.longitude;
            continuousGeocode();
       }, function(err){

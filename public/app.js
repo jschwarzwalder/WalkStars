@@ -1,3 +1,5 @@
+var geo = require('./geocode.js');
+
 var x = document.getElementById("demo");
 
 function getLocation() {
@@ -12,7 +14,9 @@ function getLocation() {
 
 var platform = new H.service.Platform({
   'app_id': 'ppxc8S78pismSdspOtop',
-  'app_code': 'BVl1WK4jZ5PRbFRJuWvz8g'
+  'app_code': 'BVl1WK4jZ5PRbFRJuWvz8g',
+   useCIT: true,
+   useHTTPS: true
 });
 
 // Obtain the default map types from the platform object:
@@ -37,7 +41,7 @@ function showPosition(position) {
   map.setCenter({latlon});
   map.setZoom(14);
 }
-var pointList = JSON.parse(new FileReader("./points.json");
+var pointList = JSON.parse(geo.a);
 
 var points = JSON.parse(pointList);
 
@@ -53,4 +57,4 @@ var polyline = new H.map.Polyline(strip, { style: { lineWidth: 10 }});
 map.addObject(polyline);
 
 // Zoom the map to make sure the whole polyline is visible:
-map.setViewBounds(polyline.getBounds());
+//map.setViewBounds(polyline.getBounds());
