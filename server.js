@@ -3,7 +3,7 @@ const app = express();
 const http = require('http').Server(app);
 const path = require('path');
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var socket = require('socket.io')(http);
 
 function Game(){
   this.players = [];
